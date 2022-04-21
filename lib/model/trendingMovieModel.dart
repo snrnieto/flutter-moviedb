@@ -25,11 +25,11 @@ class TrendingMovie {
     this.id = map["id"].toString();
     this.rating = map['vote_average'].toString();
     this.overview = map['overview'];
-    this.releaseYear = map['release_date'].toString().substring(0, 4);
+    this.releaseYear = map['release_date'].toString();
     this.bgURL = map['backdrop_path'];
     this.posterURL = map['poster_path'];
     this.title = map['title'];
-    this.category = List<Genre>();
+    this.category = <Genre>[];
     for (var id in map['genre_ids']) {
       for (var cat in genre) {
         if (cat.id == id) {

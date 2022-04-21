@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:tmdb/constants.dart';
 import 'package:tmdb/controller/movieController.dart';
@@ -239,9 +238,6 @@ class Home extends StatelessWidget {
   }
 }
 
-
-
-
 class MovieDescription extends StatelessWidget {
   final MovieController movieController = Get.put(MovieController());
   @override
@@ -362,8 +358,14 @@ class MovieDescription extends StatelessWidget {
                                                       MainAxisSize.max,
                                                   children: [
                                                     CircleAvatar(
-                                                      backgroundImage: NetworkImage(
-                                                          '$posterURL${e.profileURL}'),
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      backgroundImage: e
+                                                                  .profileURL ==
+                                                              null
+                                                          ? null
+                                                          : NetworkImage(
+                                                              '$posterURL${e.profileURL}'),
                                                       radius: 40,
                                                     ),
                                                     SizedBox(height: 10),
@@ -403,7 +405,8 @@ class MovieDescription extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       mainAxisSize: MainAxisSize.max,
-                                      children: movieController.movie.value.Reparto
+                                      children: movieController
+                                          .movie.value.reparto
                                           .map((e) => Container(
                                                 width: size.width / 4,
                                                 padding:
@@ -466,8 +469,6 @@ class MovieDescription extends StatelessWidget {
   }
 }
 
-
-
 class MovieSearch extends StatefulWidget {
   @override
   _MovieSearchState createState() => _MovieSearchState();
@@ -522,50 +523,60 @@ class _MovieSearchState extends State<MovieSearch> {
                     itemBuilder: (BuildContext context, int index) {
                       return Stack(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white10,
-                            ),
-                            height: MediaQuery.of(context).size.height * 0.25,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 3.4,
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    title: Text(
-                                        "${movieController.searchedMovies[index].title}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline5),
-                                    subtitle: Wrap(
-                                      children: movieController
-                                          .searchedMovies[index].category
-                                          .map((e) => Text('${e.category}  '))
-                                          .toList(),
-                                    ),
-                                    trailing: Container(
-                                      padding: EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        color: Colors.amber,
+                          InkWell(
+                            onTap: () {
+                              movieController.getMovieDetail(
+                                  movieController.searchedMovies[index].id);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => MovieDescription()));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white10,
+                              ),
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.4,
+                                  ),
+                                  Expanded(
+                                    child: ListTile(
+                                      title: Text(
+                                          "${movieController.searchedMovies[index].title}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5),
+                                      subtitle: Wrap(
+                                        children: movieController
+                                            .searchedMovies[index].category
+                                            .map((e) => Text('${e.category}  '))
+                                            .toList(),
                                       ),
-                                      child: Text(
-                                        "${movieController.searchedMovies[index].rating}",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                      trailing: Container(
+                                        padding: EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          color: Colors.amber,
+                                        ),
+                                        child: Text(
+                                          "${movieController.searchedMovies[index].rating}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Container(

@@ -11,7 +11,7 @@ class APIService {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['results'];
-      List<TrendingMovie> _movies = List<TrendingMovie>();
+      List<TrendingMovie> _movies = <TrendingMovie>[];
       for (var movie in data) {
         _movies.add(TrendingMovie.fromMap(movie));
       }
@@ -35,10 +35,11 @@ class APIService {
   }
 
   static Future<List<TrendingMovie>> getSearchedMovie(String movieName) async {
+    print("Search");
     http.Response response = await client.get("$searchMovie" + movieName);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['results'];
-      List<TrendingMovie> _movies = List<TrendingMovie>();
+      List<TrendingMovie> _movies = <TrendingMovie>[];
       for (var movie in data) {
         _movies.add(TrendingMovie.fromMap(movie));
       }

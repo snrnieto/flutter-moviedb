@@ -40,18 +40,18 @@ class DetailedMovie {
     this.bgURL = map['backdrop_path'];
     this.posterURL = map['poster_path'];
     this.title = map['title'];
-    this.category = List<String>();
+    this.category = <String>[];
     for (var id in map['genres']) {
       this.category.add(id['name']);
     }
     this.budget = map['budget'];
     this.revenue = map['revenue'];
     this.runtime = map['runtime'];
-    this.cast = List<Cast>();
+    this.cast = <Cast>[];
     for (var cast in map['credits']['cast']) {
       this.cast.add(Cast.fromMap(cast));
     }
-    this.reparto = List<Reparto>();
+    this.reparto = <Reparto>[];
     for (var reparto in map['credits']['crew']) {
       this.reparto.add(Reparto.fromMap(reparto));
     }

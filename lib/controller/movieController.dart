@@ -7,8 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MovieController extends GetxController {
   var isLoading = true.obs;
-  List<TrendingMovie> trendingMovies = List<TrendingMovie>().obs;
-  List<TrendingMovie> searchedMovies = List<TrendingMovie>().obs;
+  List<TrendingMovie> trendingMovies = <TrendingMovie>[].obs;
+  List<TrendingMovie> searchedMovies = <TrendingMovie>[].obs;
   var movie = DetailedMovie(
     bgURL: null,
     category: null,
@@ -74,11 +74,14 @@ class MovieController extends GetxController {
   }
 
   void launchURL(String query) async {
-    final url = '$youtubeSearch$query+offical+trailer'.toLowerCase();
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    final url = '$youtubeSearch$query+offical+trailer'
+        .toLowerCase()
+        .replaceAll(' ', '+');
+    await launch(
+      url,
+      // forceSafariVC: true,
+      // forceWebView: true,
+      // enableJavaScript: true,
+    );
   }
 }
